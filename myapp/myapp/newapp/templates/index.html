@@ -1,21 +1,14 @@
-<h1>Members</h1>
+<!DOCTYPE html>
+<!-- The command to load static and the link must be here -->
+{% load static %}
+<link rel = "stylesheet" href="{% static '../static/style.css'%}">
+<html>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-      </tr>
-{% for x in mymembers %}
-<tr>
-<td><a href="update/{{ x.id }}">{{ x.id }}</a></td>
-<td>{{ x.firstname }}</td>
-<td>{{ x.lastname }}</td>
-<td><a href="delete/{{ x.id }}">delete</a></td>
-</tr>
-{% endfor %}
-</table>
+<body>
 
-<p>
-    <a href="add/">Add member</a>
-    </p>
+
+<h1>Hello World!</h1>
+<p>Welcome to my first Django project!</p>
+
+</body>
+</html>

@@ -7,7 +7,7 @@ import logging
 
 # Create your views here.
 def index(request):
-    template = loader.get_template('myfirst.html') #if it's in newapp\templates it works even if we specify a template directory
+    template = loader.get_template('index.html') #if it's in newapp\templates it works even if we specify a template directory
     #template = loader.get_template('index.html') #more on directories https://stackoverflow.com/questions/3817926/django-can-we-do-loader-get-templatemy-template-txt
     return HttpResponse(template.render())
     #return  render(request, 'myfirst.html') // one-line alternative
@@ -20,7 +20,7 @@ def member_names(request):
   #return HttpResponse(output)
     logging.basicConfig(level=logging.INFO)
     logging.info(mymembers)
-    template = loader.get_template('index.html')
+    template = loader.get_template('members_table.html')
     context = {
     'mymembers': mymembers,
   }
