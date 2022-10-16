@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from re import template
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.template import loader
 from .models import Members
-import logging
+from django.contrib.auth.models import User, auth #this User is the User database in the admin panel
+from django.contrib import messages
+#import logging
 
 # Create your views here.
 def index(request):
@@ -18,8 +21,8 @@ def member_names(request):
   #for x in mymembers:
    # output += x["firstname"]
   #return HttpResponse(output)
-    logging.basicConfig(level=logging.INFO)
-    logging.info(mymembers)
+    #logging.basicConfig(level=logging.INFO)
+    #logging.info(mymembers)
     template = loader.get_template('members_table.html')
     context = {
     'mymembers': mymembers,
@@ -33,7 +36,7 @@ def member_names(request):
           mydata = Members.objects.values_list('firstname')
           return HttpResponse(mydata) 
         else:
-          mydata = mydata = Members.objects.filter(firstname=name).values()
+          mydata = Members.objects.filter(firstname=name).values()
           return HttpResponse(mydata)
       except:
         return HttpResponse("<h1> Wrong key</h1>", status = 400)
@@ -78,3 +81,28 @@ def updaterecord(request, id):
   member.lastname = last
   member.save()
   return HttpResponseRedirect(reverse('members'))
+
+def register(request):
+  #Registers a user in the User database from the admin panel
+  if request.method == "POST":
+    username = request.POST["username"]
+    email = request.POST["email"]
+    password = request.POST["password"]
+    password2 = request.POST["password2"]
+    if password == password2:
+      #we check if the email already exist in the User database
+      if email and User.objects.filter(email = email ).exists():
+        messages.info(request, "Email already used.")
+        return redirect('register') #same as HttpResponseRedirect
+      elif User.objects.filter(username = username ).exists():
+        messages.info(request, "Username already used.")
+        return redirect('register')
+      else:
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        return  redirect('login')
+    else:
+      messages.info(request, "Passwords don't match.")
+  else: 
+    template = loader.get_template('register.html')
+    return HttpResponse(template.render({}, request))
