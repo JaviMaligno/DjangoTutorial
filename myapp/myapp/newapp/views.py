@@ -6,13 +6,13 @@ from django.template import loader
 from .models import Members
 from django.contrib.auth.models import User, auth #this User is the User database in the admin panel
 from django.contrib import messages
-#import logging
+import logging
 
 # Create your views here.
 def index(request):
     template = loader.get_template('index.html') #if it's in newapp\templates it works even if we specify a template directory
     #template = loader.get_template('index.html') #more on directories https://stackoverflow.com/questions/3817926/django-can-we-do-loader-get-templatemy-template-txt
-    return HttpResponse(template.render())
+    return HttpResponse(template.render({}, request)) #I should always include the request because  it will allow to use it (for instance in the login view to customize the welcome message)
     #return  render(request, 'myfirst.html') // one-line alternative
 
 def member_names(request):
@@ -106,3 +106,20 @@ def register(request):
   else: 
     template = loader.get_template('register.html')
     return HttpResponse(template.render({}, request))
+
+def login(request):
+  if request.method == "POST":
+    username = request.POST["username"]
+    password = request.POST["password"]
+
+    user = auth.authenticate(username=username, password = password)
+    if user is not None:
+      auth.login(request, user) #auth does all the work for authentification in the User database from admin
+      #logging.basicConfig(level=logging.INFO)
+      #logging.info(user)
+      return redirect('/')
+    else:
+      messages.info(request, "Invalid Credentials")
+      return redirect("login")
+  else:
+    return render(request, "login.html")

@@ -5,10 +5,13 @@
 <html>
 
 <body>
-
-
+<!-- If we login we are going to customize the message -->
+{% if user.is_authenticated %}
+<h1>Hello {{user.username}}!</h1>
+<p>Welcome to my first Django project!</p>
+{% else %} 
 <h1>Hello World!</h1>
 <p>Welcome to my first Django project!</p>
-
+{% endif %}
 </body>
 </html>
