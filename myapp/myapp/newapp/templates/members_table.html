@@ -8,7 +8,7 @@
       </tr>
 {% for x in mymembers %}
 <tr>
-<td><a href="update/{{ x.id }}">{{ x.id }}</a></td>
+<td><a href="update/{{ x.id }}">{{ x.id }}</a></td> <!-- We can also write a url as code like href = "{% url 'url_name' url_value%}", for instance is url_is a variable i a for loop-->
 <td>{{ x.firstname }}</td>
 <td>{{ x.lastname }}</td>
 <td><a href="delete/{{ x.id }}">delete</a></td>
