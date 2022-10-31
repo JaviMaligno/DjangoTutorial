@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+.header {
+  padding: 2px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+}
+
+.leftcolumn {   
+  float: left;
+  width: 100%;
+}
+
+.card {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>Javi's Blog</h2>
+</div>
+
+<div class="row">
+  <div class="leftcolumn">
+    <div class="card">
+        <h1>{{post.title}}</h1>
+        <h5>{{post.created_at}}</h5>
+        <p>{{post.body}}</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="leftcolumn">
+    <div class="card">
+      <h2>{{ comments.count }} comments</h2>
+
+      {% for comment in comments %}
+        <p class="font-weight-bold">
+          {{ comment.name }}
+          <span class=" text-muted font-weight-normal">
+            {{ comment.created_on }}
+          </span>
+        </p>
+        {{ comment.body | linebreaks }}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  {% if new_comment %}
+  <p style="color: grey; font-style:italic">
+    Your comment is awaiting moderation
+  </p>
+  {% else %}
+  <h3>Leave a comment</h3>
+  <form method="post" style="margin-top: 1.3em;">
+    {{ comment_form.as_p }} <!-- https://docs.djangoproject.com/en/4.1/topics/forms/ -->
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary  btn-lg">Comment</button>
+  </form>
+  {% endif %}
+</div>
+</div>
+
+</body>
+</html>
