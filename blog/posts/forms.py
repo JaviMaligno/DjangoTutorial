@@ -7,4 +7,4 @@ class CommentForm(forms.ModelForm):
     class Meta:
         # doing this as a class is not really necessary but we're following https://djangocentral.com/creating-comments-system-with-django/
         model = Comment
-        fields = ('name', 'email (optional)', 'body')
+        fields = ('name', 'email', 'body')
