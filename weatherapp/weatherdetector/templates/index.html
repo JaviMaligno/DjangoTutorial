@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>weather</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <nav class="row" style="background: grey; color: white;">
+    <div align="center"><h1 class="col-md-3 text-center">Weather Detector</h1></div>
+  </nav>
+  <br />
+  <br />
+  <center class="row">
+    <form action="" method="post" class="col-md-6 col-md-offset-3">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" class="form-control" name="city" placeholder="Search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+        <form>
+  </center>
+  <div class="row">
+    {% if data.country_code %}
+    <div class="col-md-6 col-md-offset-3">
+      <h1>{{city}}</h1>
+      <h5>coordinate : {{data.coordinate}}</h5>
+      <h3>Weather : {{data.main}}</h1>
+        <h4>temp : {{data.temp}}<br><form id = "temp_form" method = "post" action = "">
+          {% csrf_token %}
+           <input type="radio" id='C' name="temp_unit" value="C"  onclick="check('C','temp_form');">
+           <label for="C">Cº</label>
+           <input type="radio" id='F' name="temp_unit" value="F" onclick="check('F','temp_form');">
+           <label for="F">Fº</label>
+           <input type="radio" id='K' name="temp_unit" value="K" onclick="check('K','temp_form');">
+           <label for="javascript">Kº</label>
+          </form> </h5>
+        <h4>wind : {{data.wind}}<form id = "wind_form" method = "post" action = "">
+          {% csrf_token %}
+          <input type="radio" id="kmh" name="wind_unit" value="kmh" onclick="check('kmh','wind_form');">
+          <label for="kmh">km/h</label>
+          <input type="radio" id="ms" name="wind_unit" value="ms" onclick="check('ms','wind_form');">
+          <label for="ms">m/s</label>
+          <input type="radio" id="mh" name="wind_unit" value="mh" onclick="check('mh','wind_form');">
+          <label for="mh">miles/h</label>
+         </form></h5>
+        <h4>pressure : {{data.pressure}} </h5>
+        <h4>humidity : {{data.humidity}}</h5>
+    </div>
+    {% endif %}
+  </div>
+</body>
+<script>
+  function check(id, form_id) {
+  if (document.getElementById(id).checked) {
+    document.getElementById(form_id).submit();
+  }
+}
+</script>
+</html>

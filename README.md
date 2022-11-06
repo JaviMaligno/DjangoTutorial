@@ -12,6 +12,7 @@ This app was conceived as a practice of the basic Django features, so it has a l
 This a very simple blog where I can make posts as an admin. I also allow comments from anyone. The email field is optional. The comments need to be approved by an admin (not because I believe in censorship but because I wanted to try this feature).
 
 ## WeatherApp
-
+In this app you can search a city a get information of the weather. At the moment is just an API and the city can be sent through a post request. In this request you can add `"temp_unit"` to be  `"C"`, `"F"` or `"K"` for Celsius, Fahrenheit and Kelvin temperature. You can also add `"wind_unit"` to be `"ms"`, `"kmh` or `"mh"` to display the wind speed in meter per second, kilometers per hour or miles per hour. There is some front-end done, but I wasn't satisfied with the ways in which I could allow the user to set the units, so it is not being used at the moment.
+ 
 ## RealtimeApp
 
